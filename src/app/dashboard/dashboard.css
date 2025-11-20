@@ -1,0 +1,37 @@
+
+.dashboard-container {
+	max-width: 1000px;
+	margin: 2rem auto;
+	padding: 2rem;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.dashboard-container h2 {
+	text-align: center;
+	margin-bottom: 2rem;
+}
+.chart-section {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2rem;
+}
+.table-section {
+	overflow-x: auto;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+}
+th, td {
+	border: 1px solid #e0e0e0;
+	padding: 0.5rem 0.75rem;
+	text-align: left;
+}
+th {
+	background: #f5f5f5;
+}
+tr:nth-child(even) {
+	background: #fafafa;
+}

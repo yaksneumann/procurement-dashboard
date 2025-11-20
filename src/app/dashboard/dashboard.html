@@ -1,0 +1,46 @@
+<div class="dashboard-container">
+	<h2>Procurement Dashboard</h2>
+	<div class="chart-section">
+		<canvas #chartCanvas width="400" height="200"></canvas>
+	</div>
+	<div class="table-section">
+		<table>
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>PR Number</th>
+					<th>Document Number</th>
+					<th>Vendor</th>
+					<th>Status</th>
+					<th>Approval Status</th>
+					<th>Amount (USD)</th>
+					<th>PO Creator</th>
+					<th>Requester</th>
+					<th>Buyer</th>
+					<th>Country</th>
+					<th>Department</th>
+					<th>Category</th>
+					<th>Budget Owner</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr *ngFor="let row of procurementData">
+					<td>{{ row.date }}</td>
+					<td>{{ row.prNumber }}</td>
+					<td>{{ row.documentNumber }}</td>
+					<td>{{ row.vendor }}</td>
+					<td>{{ row.status }}</td>
+					<td>{{ row.approvalStatus }}</td>
+					<td>{{ row.amount | number:'1.0-2' }}</td>
+					<td>{{ row.poCreator }}</td>
+					<td>{{ row.requester }}</td>
+					<td>{{ row.buyer }}</td>
+					<td>{{ row.country }}</td>
+					<td>{{ row.department }}</td>
+					<td>{{ row.category }}</td>
+					<td>{{ row.budgetOwner }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
