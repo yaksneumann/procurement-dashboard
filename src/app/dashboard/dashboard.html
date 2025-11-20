@@ -1,8 +1,27 @@
 <div class="dashboard-container">
 	<h2>Procurement Dashboard</h2>
+
+	<div class="summary-section">
+		<div class="summary-card">
+			<div class="summary-label">Total Expenses</div>
+			<div class="summary-value">${{ totalExpenses | number:'1.0-2' }}</div>
+		</div>
+		<div class="summary-card">
+			<div class="summary-label">Total Savings</div>
+			<div class="summary-value savings">${{ totalSavings | number:'1.0-2' }}</div>
+		</div>
+	</div>
+
 	<div class="chart-section">
 		<canvas #chartCanvas width="400" height="200"></canvas>
 	</div>
+	<div class="chart-section">
+		<canvas #donutChartCanvas width="400" height="200"></canvas>
+	</div>
+	<div class="chart-section">
+		<canvas #dotChartCanvas width="400" height="200"></canvas>
+	</div>
+
 	<div class="table-section">
 		<table>
 			<thead>

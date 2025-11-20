@@ -12,6 +12,8 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 })
 export class Dashboard implements AfterViewInit {
   @ViewChild('chartCanvas', { static: false }) chartCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('donutChartCanvas', { static: false }) donutChartCanvas!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('dotChartCanvas', { static: false }) dotChartCanvas!: ElementRef<HTMLCanvasElement>;
 
   procurementData = [
     {
@@ -65,11 +67,37 @@ export class Dashboard implements AfterViewInit {
   ];
 
   ngAfterViewInit(): void {
-    this.renderChart();
+    this.renderBarChart();
+    this.renderDonutChart();
+    this.renderDotChart();
   }
 
-  async renderChart() {
-    // Dynamically import Chart.js
+  get totalExpenses(): number {
+    return this.procurementData.reduce((sum, row) => sum + row.amount, 0);
+  }
+
+  get totalSavings(): number {
+    // Example: savings is 10% of amount for Closed status
+    return this.procurementData.reduce((sum, row) => sum + (row.status === 'Closed' ? row.amount * 0.1 : 0), 0);
+  }
+
+  get savingsByBuyer(): { [buyer: string]: number } {
+    const result: { [buyer: string]: number } = {};
+    for (const row of this.procurementData) {
+      if (row.status === 'Closed') {
+        result[row.buyer] = (result[row.buyer] || 0) + row.amount * 0.1;
+      }
+    }
+    return result;
+  }
+
+  buyerColors: { [buyer: string]: string } = {
+    'Charlie': 'rgba(54, 162, 235, 0.7)',
+    'Grace': 'rgba(255, 99, 132, 0.7)',
+    'Mallory': 'rgba(255, 206, 86, 0.7)'
+  };
+
+  async renderBarChart() {
     const Chart = (await import('chart.js/auto')).default;
     const ctx = this.chartCanvas.nativeElement.getContext('2d');
     if (!ctx) return;
@@ -81,16 +109,8 @@ export class Dashboard implements AfterViewInit {
           {
             label: 'Amount (USD)',
             data: this.procurementData.map(d => d.amount),
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.7)',
-              'rgba(255, 99, 132, 0.7)',
-              'rgba(255, 206, 86, 0.7)'
-            ],
-            borderColor: [
-              'rgba(54, 162, 235, 1)',
-              'rgba(255, 99, 132, 1)',
-              'rgba(255, 206, 86, 1)'
-            ],
+            backgroundColor: this.procurementData.map(d => this.buyerColors[d.buyer] || 'rgba(100,100,100,0.5)'),
+            borderColor: this.procurementData.map(d => this.buyerColors[d.buyer]?.replace('0.7', '1') || 'rgba(100,100,100,1)'),
             borderWidth: 1
           }
         ]
@@ -103,6 +123,85 @@ export class Dashboard implements AfterViewInit {
         },
         scales: {
           y: { beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  async renderDonutChart() {
+    const Chart = (await import('chart.js/auto')).default;
+    const ctx = this.donutChartCanvas.nativeElement.getContext('2d');
+    if (!ctx) return;
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Savings', 'Expenses'],
+        datasets: [
+          {
+            label: 'Savings vs Expenses',
+            data: [this.totalSavings, this.totalExpenses - this.totalSavings],
+            backgroundColor: ['#4caf50', '#e0e0e0'],
+            borderColor: ['#388e3c', '#bdbdbd'],
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: true },
+          title: { display: true, text: 'Savings vs Total Expenses' }
+        }
+      }
+    });
+  }
+
+  async renderDotChart() {
+    const Chart = (await import('chart.js/auto')).default;
+    const ctx = this.dotChartCanvas.nativeElement.getContext('2d');
+    if (!ctx) return;
+    const buyers = Object.keys(this.savingsByBuyer);
+    const data = buyers.map(buyer => ({
+      x: buyer,
+      y: this.savingsByBuyer[buyer],
+      backgroundColor: this.buyerColors[buyer] || 'rgba(100,100,100,0.5)'
+    }));
+    new Chart(ctx, {
+      type: 'scatter',
+      data: {
+        datasets: [
+          {
+            label: 'Savings by Buyer',
+            data: buyers.map(buyer => ({ x: buyers.indexOf(buyer), y: this.savingsByBuyer[buyer] })),
+            backgroundColor: buyers.map(buyer => this.buyerColors[buyer] || 'rgba(100,100,100,0.5)'),
+            pointRadius: 8
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { display: false },
+          title: { display: true, text: 'Savings by Buyer (Dot Chart)' },
+          tooltip: {
+            callbacks: {
+              label: (context: any) => {
+                const buyer = buyers[context.dataIndex];
+                return `${buyer}: $${context.parsed.y.toFixed(2)}`;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'category',
+            labels: buyers,
+            title: { display: true, text: 'Buyer' }
+          },
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: 'Savings (USD)' }
+          }
         }
       }
     });
