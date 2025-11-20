@@ -16,54 +16,18 @@ export class Dashboard implements AfterViewInit {
   @ViewChild('dotChartCanvas', { static: false }) dotChartCanvas!: ElementRef<HTMLCanvasElement>;
 
   procurementData = [
-    {
-      date: '2025-11-01',
-      prNumber: 'PR-1001',
-      documentNumber: 'DOC-2001',
-      vendor: 'Acme Corp',
-      status: 'Open',
-      approvalStatus: 'Pending',
-      amount: 12000,
-      poCreator: 'Alice',
-      requester: 'Bob',
-      buyer: 'Charlie',
-      country: 'USA',
-      department: 'IT',
-      category: 'Hardware',
-      budgetOwner: 'Diana'
-    },
-    {
-      date: '2025-11-05',
-      prNumber: 'PR-1002',
-      documentNumber: 'DOC-2002',
-      vendor: 'Globex',
-      status: 'Closed',
-      approvalStatus: 'Approved',
-      amount: 8000,
-      poCreator: 'Eve',
-      requester: 'Frank',
-      buyer: 'Grace',
-      country: 'UK',
-      department: 'Finance',
-      category: 'Software',
-      budgetOwner: 'Heidi'
-    },
-    {
-      date: '2025-11-10',
-      prNumber: 'PR-1003',
-      documentNumber: 'DOC-2003',
-      vendor: 'Initech',
-      status: 'Open',
-      approvalStatus: 'Rejected',
-      amount: 5000,
-      poCreator: 'Ivan',
-      requester: 'Judy',
-      buyer: 'Mallory',
-      country: 'Germany',
-      department: 'HR',
-      category: 'Services',
-      budgetOwner: 'Niaj'
-    }
+    { date: '2025-11-01', prNumber: 'PR-1001', documentNumber: 'DOC-2001', vendor: 'Acme Corp', status: 'Open', approvalStatus: 'Pending', amount: 12000, poCreator: 'Alice', requester: 'Bob', buyer: 'Charlie', country: 'USA', department: 'IT', category: 'Hardware', budgetOwner: 'Diana' },
+    { date: '2025-11-05', prNumber: 'PR-1002', documentNumber: 'DOC-2002', vendor: 'Globex', status: 'Closed', approvalStatus: 'Approved', amount: 8000, poCreator: 'Eve', requester: 'Frank', buyer: 'Grace', country: 'UK', department: 'Finance', category: 'Software', budgetOwner: 'Heidi' },
+    { date: '2025-11-10', prNumber: 'PR-1003', documentNumber: 'DOC-2003', vendor: 'Initech', status: 'Open', approvalStatus: 'Rejected', amount: 5000, poCreator: 'Ivan', requester: 'Judy', buyer: 'Mallory', country: 'Germany', department: 'HR', category: 'Services', budgetOwner: 'Niaj' },
+    { date: '2025-11-12', prNumber: 'PR-1004', documentNumber: 'DOC-2004', vendor: 'Acme Corp', status: 'Closed', approvalStatus: 'Approved', amount: 15000, poCreator: 'Alice', requester: 'Bob', buyer: 'Charlie', country: 'USA', department: 'IT', category: 'Hardware', budgetOwner: 'Diana' },
+    { date: '2025-11-13', prNumber: 'PR-1005', documentNumber: 'DOC-2005', vendor: 'Globex', status: 'Closed', approvalStatus: 'Approved', amount: 9500, poCreator: 'Eve', requester: 'Frank', buyer: 'Grace', country: 'UK', department: 'Finance', category: 'Software', budgetOwner: 'Heidi' },
+    { date: '2025-11-14', prNumber: 'PR-1006', documentNumber: 'DOC-2006', vendor: 'Initech', status: 'Open', approvalStatus: 'Pending', amount: 7000, poCreator: 'Ivan', requester: 'Judy', buyer: 'Mallory', country: 'Germany', department: 'HR', category: 'Services', budgetOwner: 'Niaj' },
+    { date: '2025-11-15', prNumber: 'PR-1007', documentNumber: 'DOC-2007', vendor: 'Acme Corp', status: 'Closed', approvalStatus: 'Approved', amount: 11000, poCreator: 'Alice', requester: 'Bob', buyer: 'Charlie', country: 'USA', department: 'IT', category: 'Hardware', budgetOwner: 'Diana' },
+    { date: '2025-11-16', prNumber: 'PR-1008', documentNumber: 'DOC-2008', vendor: 'Globex', status: 'Open', approvalStatus: 'Pending', amount: 12000, poCreator: 'Eve', requester: 'Frank', buyer: 'Grace', country: 'UK', department: 'Finance', category: 'Software', budgetOwner: 'Heidi' },
+    { date: '2025-11-17', prNumber: 'PR-1009', documentNumber: 'DOC-2009', vendor: 'Initech', status: 'Closed', approvalStatus: 'Approved', amount: 8000, poCreator: 'Ivan', requester: 'Judy', buyer: 'Mallory', country: 'Germany', department: 'HR', category: 'Services', budgetOwner: 'Niaj' },
+    { date: '2025-11-18', prNumber: 'PR-1010', documentNumber: 'DOC-2010', vendor: 'Acme Corp', status: 'Closed', approvalStatus: 'Approved', amount: 13000, poCreator: 'Alice', requester: 'Bob', buyer: 'Charlie', country: 'USA', department: 'IT', category: 'Hardware', budgetOwner: 'Diana' },
+    { date: '2025-11-19', prNumber: 'PR-1011', documentNumber: 'DOC-2011', vendor: 'Globex', status: 'Closed', approvalStatus: 'Approved', amount: 10500, poCreator: 'Eve', requester: 'Frank', buyer: 'Grace', country: 'UK', department: 'Finance', category: 'Software', budgetOwner: 'Heidi' },
+    { date: '2025-11-20', prNumber: 'PR-1012', documentNumber: 'DOC-2012', vendor: 'Initech', status: 'Open', approvalStatus: 'Pending', amount: 9000, poCreator: 'Ivan', requester: 'Judy', buyer: 'Mallory', country: 'Germany', department: 'HR', category: 'Services', budgetOwner: 'Niaj' }
   ];
 
   ngAfterViewInit(): void {
