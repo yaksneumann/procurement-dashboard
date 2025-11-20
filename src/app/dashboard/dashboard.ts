@@ -37,12 +37,13 @@ export class Dashboard implements AfterViewInit {
   }
 
   get totalExpenses(): number {
-    return this.procurementData.reduce((sum, row) => sum + row.amount, 0);
+    // Hardcoded for dashboard display as requested
+    return 120_000_000;
   }
 
   get totalSavings(): number {
-    // Example: savings is 10% of amount for Closed status
-    return this.procurementData.reduce((sum, row) => sum + (row.status === 'Closed' ? row.amount * 0.1 : 0), 0);
+    // Hardcoded for dashboard display as requested
+    return 26_000_000;
   }
 
   get savingsByBuyer(): { [buyer: string]: number } {
